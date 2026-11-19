@@ -526,6 +526,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     };
 
     private readonly onPreviewTileClick = (ev: MouseEvent<HTMLElement>): void => {
+        // Buttons inside the preview (e.g. "View in room") handle their own action,
+        // so the click must not also open the thread.
+        if (ev.target instanceof Element && ev.target.closest("button")) return;
+
         const target = ev.currentTarget;
         const index = target.parentElement ? Array.from(target.parentElement.children).indexOf(target) : -1;
 
